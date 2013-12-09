@@ -15,6 +15,7 @@ use Moose;
 use MooseX::LazyRequire;
 
 
+
 has git => ( is => ro =>, isa => Object =>, lazy_build => 1 );
 
 sub _build_git {
@@ -22,6 +23,7 @@ sub _build_git {
   require Dist::Zilla::Util::Git::Wrapper;
   return Dist::Zilla::Util::Git::Wrapper->new( zilla => $self->zilla );
 }
+
 
 has zilla => ( is => ro =>, isa => Object =>, lazy_required => 1 );
 
@@ -40,10 +42,12 @@ sub _for_each_ref {
   return;
 }
 
+
 sub refs {
   my ($self) = @_;
   return $self->get_ref('refs/**');
 }
+
 
 sub get_ref {
   my ( $self, $refspec ) = @_;
@@ -91,7 +95,7 @@ work with refs, and those ways aren't exactly all equal, or supported on all ver
 
 This abstracts it so things can just use them.
 
-    my $refs = Dist::Zilla::Util::Git::Refs->new();
+    my $refs = Dist::Zilla::Util::Git::Refs->new( zilla => $self->zilla );
 
     $refs->refs(); # A ::Ref object for each entry from `git ls-remote .`
 
@@ -104,6 +108,38 @@ This abstracts it so things can just use them.
     my ( @results ) = $refs->get_ref('refs/remotes/**'); # all remote branches
 
 Note: You probably shouldn't use this module directly, and should instead use one of the C<::Util::Git> family.
+
+=head1 METHODS
+
+=head2 C<refs>
+
+Lists all C<refs> in the C<refs/> namespace.
+
+    my (@refs) = $reffer->refs();
+
+Shorthand for
+
+    my (@refs) = $reffer->get_ref('refs/**');
+
+=head2 C<get_ref>
+
+Fetch a given C<ref>, or collection of C<ref>s, matching a specification.
+
+    my ($ref) = $reffer->get_ref('refs/heads/master');
+    my (@branches) = $reffer->get_ref('refs/heads/**');
+    my (@tags)   = $reffer->get_ref('refs/tags/**');
+
+Though reminder, if you're working with branches or tags, use the relevant modules =).
+
+=head1 ATTRIBUTES
+
+=head2 C<git>
+
+Optional, built from C<zilla> where possible.
+
+=head2 C<zilla>
+
+But mandatory if C<git> is not specified.
 
 =head1 AUTHOR
 

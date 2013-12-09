@@ -11,7 +11,7 @@ SYNOPSIS
 
     This abstracts it so things can just use them.
 
-        my $refs = Dist::Zilla::Util::Git::Refs->new();
+        my $refs = Dist::Zilla::Util::Git::Refs->new( zilla => $self->zilla );
 
         $refs->refs(); # A ::Ref object for each entry from `git ls-remote .`
 
@@ -25,6 +25,33 @@ SYNOPSIS
 
     Note: You probably shouldn't use this module directly, and should
     instead use one of the "::Util::Git" family.
+
+METHODS
+  "refs"
+    Lists all "refs" in the "refs/" namespace.
+
+        my (@refs) = $reffer->refs();
+
+    Shorthand for
+
+        my (@refs) = $reffer->get_ref('refs/**');
+
+  "get_ref"
+    Fetch a given "ref", or collection of "ref"s, matching a specification.
+
+        my ($ref) = $reffer->get_ref('refs/heads/master');
+        my (@branches) = $reffer->get_ref('refs/heads/**');
+        my (@tags)   = $reffer->get_ref('refs/tags/**');
+
+    Though reminder, if you're working with branches or tags, use the
+    relevant modules =).
+
+ATTRIBUTES
+  "git"
+    Optional, built from "zilla" where possible.
+
+  "zilla"
+    But mandatory if "git" is not specified.
 
 AUTHOR
     Kent Fredric <kentfredric@gmail.com>
