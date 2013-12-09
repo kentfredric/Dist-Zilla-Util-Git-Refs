@@ -15,7 +15,7 @@ work with refs, and those ways aren't exactly all equal, or supported on all ver
 
 This abstracts it so things can just use them.
 
-    my $refs = Dist::Zilla::Util::Git::Refs->new();
+    my $refs = Dist::Zilla::Util::Git::Refs->new( zilla => $self->zilla );
 
     $refs->refs(); # A ::Ref object for each entry from `git ls-remote .`
 
@@ -31,6 +31,12 @@ Note: You probably shouldn't use this module directly, and should instead use on
 
 =cut
 
+=attr C<git>
+
+Optional, built from C<zilla> where possible.
+
+=cut
+
 has git => ( is => ro =>, isa => Object =>, lazy_build => 1 );
 
 sub _build_git {
@@ -38,6 +44,12 @@ sub _build_git {
   require Dist::Zilla::Util::Git::Wrapper;
   return Dist::Zilla::Util::Git::Wrapper->new( zilla => $self->zilla );
 }
+
+=attr C<zilla>
+
+But mandatory if C<git> is not specified.
+
+=cut
 
 has zilla => ( is => ro =>, isa => Object =>, lazy_required => 1 );
 
@@ -56,10 +68,34 @@ sub _for_each_ref {
   return;
 }
 
+=method C<refs>
+
+Lists all C<refs> in the C<refs/> C<namespace>.
+
+    my (@refs) = $reffer->refs();
+
+Shorthand for
+
+    my (@refs) = $reffer->get_ref('refs/**');
+
+=cut
+
 sub refs {
   my ($self) = @_;
   return $self->get_ref('refs/**');
 }
+
+=method C<get_ref>
+
+Fetch a given C<ref>, or collection of C<ref>s, matching a specification.
+
+    my ($ref) = $reffer->get_ref('refs/heads/master');
+    my (@branches) = $reffer->get_ref('refs/heads/**');
+    my (@tags)   = $reffer->get_ref('refs/tags/**');
+
+Though reminder, if you're working with branches or tags, use the relevant modules =).
+
+=cut
 
 sub get_ref {
   my ( $self, $refspec ) = @_;
