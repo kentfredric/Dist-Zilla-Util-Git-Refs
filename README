@@ -28,7 +28,7 @@ SYNOPSIS
 
 METHODS
   "refs"
-    Lists all "refs" in the "refs/" namespace.
+    Lists all "refs" in the "refs/" "namespace".
 
         my (@refs) = $reffer->refs();
 

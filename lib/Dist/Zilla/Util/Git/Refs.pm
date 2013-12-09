@@ -113,7 +113,7 @@ Note: You probably shouldn't use this module directly, and should instead use on
 
 =head2 C<refs>
 
-Lists all C<refs> in the C<refs/> namespace.
+Lists all C<refs> in the C<refs/> C<namespace>.
 
     my (@refs) = $reffer->refs();
 
