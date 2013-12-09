@@ -112,6 +112,17 @@
       }
    },
    "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/kentfredric/Dist-Zilla-Util-Git-Refs/issues"
+      },
+      "homepage" : "https://github.com/kentfredric/Dist-Zilla-Util-Git-Refs",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/kentfredric/Dist-Zilla-Util-Git-Refs.git",
+         "web" : "https://github.com/kentfredric/Dist-Zilla-Util-Git-Refs"
+      }
+   },
    "version" : "0.001000",
    "x_BuiltWith" : {
       "modules" : {

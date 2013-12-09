@@ -33,6 +33,10 @@ requires:
   strict: 0
   utf8: 0
   warnings: 0
+resources:
+  bugtracker: https://github.com/kentfredric/Dist-Zilla-Util-Git-Refs/issues
+  homepage: https://github.com/kentfredric/Dist-Zilla-Util-Git-Refs
+  repository: https://github.com/kentfredric/Dist-Zilla-Util-Git-Refs.git
 version: 0.001000
 x_BuiltWith:
   modules:
