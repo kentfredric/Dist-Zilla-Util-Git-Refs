@@ -105,11 +105,11 @@
    "provides" : {
       "Dist::Zilla::Util::Git::Refs" : {
          "file" : "lib/Dist/Zilla/Util/Git/Refs.pm",
-         "version" : "0.001001"
+         "version" : "0.002000"
       },
       "Dist::Zilla::Util::Git::Refs::Ref" : {
          "file" : "lib/Dist/Zilla/Util/Git/Refs/Ref.pm",
-         "version" : "0.001001"
+         "version" : "0.002000"
       }
    },
    "release_status" : "stable",
@@ -124,7 +124,7 @@
          "web" : "https://github.com/kentfredric/Dist-Zilla-Util-Git-Refs"
       }
    },
-   "version" : "0.001001",
+   "version" : "0.002000",
    "x_BuiltWith" : {
       "modules" : {
          "Carp" : "1.32",

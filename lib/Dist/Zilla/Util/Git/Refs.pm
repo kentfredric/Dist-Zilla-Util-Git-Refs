@@ -6,7 +6,7 @@ BEGIN {
   $Dist::Zilla::Util::Git::Refs::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $Dist::Zilla::Util::Git::Refs::VERSION = '0.001001';
+  $Dist::Zilla::Util::Git::Refs::VERSION = '0.002000';
 }
 
 # ABSTRACT: Work with refs
@@ -74,7 +74,7 @@ Dist::Zilla::Util::Git::Refs - Work with refs
 
 =head1 VERSION
 
-version 0.001001
+version 0.002000
 
 =head1 SYNOPSIS
 

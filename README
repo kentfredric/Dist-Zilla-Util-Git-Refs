@@ -2,7 +2,7 @@ NAME
     Dist::Zilla::Util::Git::Refs - Work with refs
 
 VERSION
-    version 0.001001
+    version 0.002000
 
 SYNOPSIS
     After doing lots of work with Git::Wrapper, I found there's quite a few
