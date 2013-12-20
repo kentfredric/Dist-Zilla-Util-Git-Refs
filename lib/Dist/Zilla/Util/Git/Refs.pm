@@ -6,26 +6,14 @@ BEGIN {
   $Dist::Zilla::Util::Git::Refs::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $Dist::Zilla::Util::Git::Refs::VERSION = '0.001000';
+  $Dist::Zilla::Util::Git::Refs::VERSION = '0.001001';
 }
 
 # ABSTRACT: Work with refs
 
 use Moose;
-use MooseX::LazyRequire;
+with 'Dist::Zilla::UtilRole::MaybeGit';
 
-
-
-has git => ( is => ro =>, isa => Object =>, lazy_build => 1 );
-
-sub _build_git {
-  my ($self) = @_;
-  require Dist::Zilla::Util::Git::Wrapper;
-  return Dist::Zilla::Util::Git::Wrapper->new( zilla => $self->zilla );
-}
-
-
-has zilla => ( is => ro =>, isa => Object =>, lazy_required => 1 );
 
 sub _for_each_ref {
   my ( $self, $refspec, $callback ) = @_;
@@ -86,7 +74,7 @@ Dist::Zilla::Util::Git::Refs - Work with refs
 
 =head1 VERSION
 
-version 0.001000
+version 0.001001
 
 =head1 SYNOPSIS
 
@@ -130,16 +118,6 @@ Fetch a given C<ref>, or collection of C<ref>s, matching a specification.
     my (@tags)   = $reffer->get_ref('refs/tags/**');
 
 Though reminder, if you're working with branches or tags, use the relevant modules =).
-
-=head1 ATTRIBUTES
-
-=head2 C<git>
-
-Optional, built from C<zilla> where possible.
-
-=head2 C<zilla>
-
-But mandatory if C<git> is not specified.
 
 =head1 AUTHOR
 

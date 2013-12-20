@@ -7,7 +7,7 @@ BEGIN {
   $Dist::Zilla::Util::Git::Refs::Ref::AUTHORITY = 'cpan:KENTNL';
 }
 {
-  $Dist::Zilla::Util::Git::Refs::Ref::VERSION = '0.001000';
+  $Dist::Zilla::Util::Git::Refs::Ref::VERSION = '0.001001';
 }
 
 # ABSTRACT: An Abstract REF node
@@ -52,7 +52,7 @@ Dist::Zilla::Util::Git::Refs::Ref - An Abstract REF node
 
 =head1 VERSION
 
-version 0.001000
+version 0.001001
 
 =head1 METHODS
 
