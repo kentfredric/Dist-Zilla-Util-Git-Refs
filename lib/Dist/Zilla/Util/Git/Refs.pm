@@ -6,7 +6,7 @@ package Dist::Zilla::Util::Git::Refs;
 # ABSTRACT: Work with refs
 
 use Moose;
-use MooseX::LazyRequire;
+with 'Dist::Zilla::UtilRole::MaybeGit';
 
 =head1 SYNOPSIS
 
@@ -30,28 +30,6 @@ This abstracts it so things can just use them.
 Note: You probably shouldn't use this module directly, and should instead use one of the C<::Util::Git> family.
 
 =cut
-
-=attr C<git>
-
-Optional, built from C<zilla> where possible.
-
-=cut
-
-has git => ( is => ro =>, isa => Object =>, lazy_build => 1 );
-
-sub _build_git {
-  my ($self) = @_;
-  require Dist::Zilla::Util::Git::Wrapper;
-  return Dist::Zilla::Util::Git::Wrapper->new( zilla => $self->zilla );
-}
-
-=attr C<zilla>
-
-But mandatory if C<git> is not specified.
-
-=cut
-
-has zilla => ( is => ro =>, isa => Object =>, lazy_required => 1 );
 
 sub _for_each_ref {
   my ( $self, $refspec, $callback ) = @_;
