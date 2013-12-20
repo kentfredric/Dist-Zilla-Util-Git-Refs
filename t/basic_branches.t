@@ -22,9 +22,16 @@ my $file = $repo->child('testfile');
 use Dist::Zilla::Util::Git::Wrapper;
 use Git::Wrapper;
 use Test::Fatal qw(exception);
+use Sort::Versions;
 
-my $git = Git::Wrapper->new( $tempdir->child('git-repo') );
-my $wrapper = Dist::Zilla::Util::Git::Wrapper->new( git => $git );
+my $wrapper = Dist::Zilla::Util::Git::Wrapper->new( git => Git::Wrapper->new( $tempdir->child('git-repo') ) );
+
+our ($IS_ONE_FIVE_PLUS);
+
+if ( versioncmp( $wrapper->version, '1.5' ) > 0 ) {
+  note "> 1.5";
+  $IS_ONE_FIVE_PLUS = 1;
+}
 
 sub report_ctx {
   my (@lines) = @_;
@@ -34,19 +41,43 @@ sub report_ctx {
 my $tip;
 
 my $excp = exception {
-  $wrapper->init();
+  if ($IS_ONE_FIVE_PLUS) {
+    $wrapper->init();
+  }
+  else {
+    $wrapper->init_db();
+  }
+  note 'touch';
   $file->touch;
-  $wrapper->add($file);
+
+  note 'git add ' . $file->relative($repo);
+  $wrapper->add( $file->relative($repo) );
+  note 'git commit';
   $wrapper->commit( '-m', 'Test Commit' );
+  note 'git checkout -b';
   $wrapper->checkout( '-b', 'master_2' );
   $file->spew('New Content');
-  $wrapper->add($file);
+  if ($IS_ONE_FIVE_PLUS) {
+    note 'git add ' . $file->relative($repo);
+    $wrapper->add( $file->relative($repo) );
+  }
+  else {
+    note 'git update-index ' . $file->relative($repo);
+    $wrapper->update_index( $file->relative($repo) );
+  }
+  note 'git commit';
   $wrapper->commit( '-m', 'Test Commit 2' );
+  note 'git checkout -b';
   $wrapper->checkout( '-b', 'master_3' );
 
   ( $tip, ) = $wrapper->rev_parse('HEAD');
 };
-is( $excp, undef, 'Git::Wrapper methods executed without failure' ) or diag $excp;
+
+is( $excp, undef, 'Git::Wrapper methods executed without failure' ) or do {
+  diag $excp;
+  print "$tempdir\n";
+  system('urxvt');
+};
 
 use Dist::Zilla::Util::Git::Refs;
 my $branch_finder = Dist::Zilla::Util::Git::Refs->new( git => $wrapper );
