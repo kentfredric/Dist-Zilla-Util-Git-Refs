@@ -4,7 +4,7 @@ Dist::Zilla::Util::Git::Refs - Work with refs
 
 # VERSION
 
-version 0.001000
+version 0.002000
 
 # SYNOPSIS
 
@@ -48,16 +48,6 @@ Fetch a given `ref`, or collection of `ref`s, matching a specification.
     my (@tags)   = $reffer->get_ref('refs/tags/**');
 
 Though reminder, if you're working with branches or tags, use the relevant modules =).
-
-# ATTRIBUTES
-
-## `git`
-
-Optional, built from `zilla` where possible.
-
-## `zilla`
-
-But mandatory if `git` is not specified.
 
 # AUTHOR
 
